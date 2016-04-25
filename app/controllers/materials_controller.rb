@@ -1,6 +1,5 @@
 class MaterialsController < ApplicationController
-
   def index
-    raise 'Hello from the index action'
+    render json: Material.all
   end
 end

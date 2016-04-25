@@ -7,9 +7,8 @@ describe('OrganizatronController', function() {
   }));
 
   it('allows a user to add links', function() {
-    ctrl.addLink('new Link');
-    expect(ctrl.links).toContain('new Link');
+    var linkItem = { name:'new Link', url:'#' };
+    ctrl.addLink(linkItem);
+    expect(ctrl.links).toContain(linkItem);
   });
-
-
 });

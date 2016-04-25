@@ -9,7 +9,7 @@ describe('Basic feature test of organizatron App', function() {
     $('#add-link-url').clear().sendKeys('http://url.com/');
     $('#save-link').click();
     var linkName = $$('.links').first();
-    var linkUrl = linkName.$('a')
+    var linkUrl = linkName.$('a');
     expect(linkName.getText()).toContain('user added link');
     expect(linkUrl.getAttribute('href')).toEqual('http://url.com/');
   });

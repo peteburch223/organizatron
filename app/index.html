@@ -9,7 +9,11 @@
  </head>
  <body>
    <div id="organizatron" ng-controller="OrganizatronController as controller">
-     {{ controller.organizatron }}
+     <input id="add-link" type="text" ng-model="link">
+     <button id="save-link" type="button" ng-click="controller.addLink(link)">Add Link</button>
+     <div class="links" ng-repeat="link in controller.links">
+       {{ link }}
+     </div>
    </div>
  </body>
 </html>

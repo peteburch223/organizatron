@@ -1,10 +1,15 @@
 describe('OrganizatronController', function() {
   beforeEach(module('organizatronApp'));
-  it('initialises with a toDo', function() {
-    expect(ctrl.organizatron).toEqual("Organizatron1");
-  });
   var ctrl;
+
   beforeEach(inject(function($controller) {
     ctrl = $controller('OrganizatronController');
   }));
+
+  it('allows a user to add links', function() {
+    ctrl.addLink('new Link');
+    expect(ctrl.links).toContain('new Link');
+  });
+
+
 });

@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425193158) do
+ActiveRecord::Schema.define(version: 20160426103724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "material_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "materials", force: :cascade do |t|
     t.string   "link_url"
@@ -23,6 +28,14 @@ ActiveRecord::Schema.define(version: 20160425193158) do
     t.string   "title"
     t.string   "description"
   end
+
+  create_table "materials_tags", id: false, force: :cascade do |t|
+    t.integer "material_id", null: false
+    t.integer "tag_id",      null: false
+  end
+
+  add_index "materials_tags", ["material_id", "tag_id"], name: "index_materials_tags_on_material_id_and_tag_id", using: :btree
+  add_index "materials_tags", ["tag_id", "material_id"], name: "index_materials_tags_on_tag_id_and_material_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"

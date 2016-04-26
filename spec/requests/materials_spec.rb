@@ -15,7 +15,26 @@ describe "materials API" do
       expect(body["title"]).to eq expected_result.title
       expect(body["description"]).to eq expected_result.description
     end
+
+
+  it "returns all the materials filtered by tag" do
+    material = FactoryGirl.build(:material)
+    tag = FactoryGirl.build(:tag)
+    material_tag = FactoryGirl.build(:material_tag)
+    expected_result = link_material_with_tag(material_tag, material, tag)
+    p expected_result
+    get "/materials", {}, { "Accept" => "application/json" }
+
+    expect(response.status).to eq 200
+
+    body = JSON.parse(response.body).first
+    body.keep_if { |k,v| ["link_url","title","description"].include? k }
+
+    expect(body["link_url"]).to eq expected_result.link_url
+    expect(body["title"]).to eq expected_result.title
+    expect(body["description"]).to eq expected_result.description
   end
+end
 
 
   describe "POST /materials" do

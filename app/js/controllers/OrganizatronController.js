@@ -1,4 +1,4 @@
-organizatronApp.controller('OrganizatronController', [function() {
+organizatronApp.controller('OrganizatronController', [ 'MaterialFactory', function(MaterialFactory) {
   var vm = this;
 
   vm.materials = [];

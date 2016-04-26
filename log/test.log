@@ -1,0 +1,434 @@
+  [1m[36m (117.2ms)[0m  [1mDROP DATABASE IF EXISTS "organizatron_test"[0m
+  [1m[35m (240.5ms)[0m  CREATE DATABASE "organizatron_test" ENCODING = 'unicode'
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (4.1ms)[0m  CREATE TABLE "materials" ("id" serial primary key, "link_url" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "title" character varying, "description" character varying) 
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "materials_tags" ("material_id" integer NOT NULL, "tag_id" integer NOT NULL) [0m
+  [1m[35m (0.8ms)[0m  CREATE  INDEX  "index_materials_tags_on_material_id_and_tag_id" ON "materials_tags" USING btree ("material_id", "tag_id")
+  [1m[36m (0.7ms)[0m  [1mCREATE  INDEX  "index_materials_tags_on_tag_id_and_material_id" ON "materials_tags" USING btree ("tag_id", "material_id")[0m
+  [1m[35m (2.8ms)[0m  CREATE TABLE "tags" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160426090609')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160425185049')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160425191220')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160425191248')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160425193158')
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 09:10:08.073035"], ["updated_at", "2016-04-26 09:10:08.073035"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 10:10:08 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 11ms (Views: 1.2ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 10:10:08 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 09:10:08.118968"], ["updated_at", "2016-04-26 09:10:08.118968"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 2ms (Views: 0.3ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 09:10:08.132830"], ["updated_at", "2016-04-26 09:10:08.132830"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 10:10:08 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.2ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 09:17:21.798107"], ["updated_at", "2016-04-26 09:17:21.798107"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 10:17:21 +0100
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 10:17:21 +0100
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "interesting"], ["created_at", "2016-04-26 09:17:21.832259"], ["updated_at", "2016-04-26 09:17:21.832259"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 10:17:21 +0100
+Processing by TagsController#index as JSON
+  [1m[36mTag Load (0.3ms)[0m  [1mSELECT "tags".* FROM "tags"[0m
+Completed 200 OK in 11ms (Views: 0.9ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:20:42.984735"], ["updated_at", "2016-04-26 10:20:42.984735"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:20:43.017124"], ["updated_at", "2016-04-26 10:20:43.017124"]]
+  [1m[35mSQL (7.7ms)[0m  INSERT INTO "materials_tags" ("tag_id", "material_id") VALUES ($1, $2)  [["tag_id", 3], ["material_id", 4]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:20:43 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 8ms (Views: 1.0ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:20:43.054253"], ["updated_at", "2016-04-26 10:20:43.054253"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:20:43.056606"], ["updated_at", "2016-04-26 10:20:43.056606"]]
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials_tags" ("tag_id", "material_id") VALUES ($1, $2)  [["tag_id", 4], ["material_id", 5]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:20:43 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:20:43 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:20:43.068421"], ["updated_at", "2016-04-26 10:20:43.068421"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 2ms (Views: 0.2ms | ActiveRecord: 0.4ms)
+  [1m[35mMaterial Load (0.4ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:20:43.075459"], ["updated_at", "2016-04-26 10:20:43.075459"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:20:43 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.3ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:22:15.985305"], ["updated_at", "2016-04-26 10:22:15.985305"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "interesting"], ["created_at", "2016-04-26 10:22:15.993634"], ["updated_at", "2016-04-26 10:22:15.993634"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:22:16 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:22:16.022201"], ["updated_at", "2016-04-26 10:22:16.022201"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 13ms (Views: 0.3ms | ActiveRecord: 0.5ms)
+  [1m[35mMaterial Load (0.4ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:22:16.030411"], ["updated_at", "2016-04-26 10:22:16.030411"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:22:16 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.5ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 2ms (Views: 0.9ms | ActiveRecord: 0.5ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:23:00.079087"], ["updated_at", "2016-04-26 10:23:00.079087"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:23:00.104204"], ["updated_at", "2016-04-26 10:23:00.104204"]]
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "materials_tags" ("tag_id", "material_id") VALUES ($1, $2)  [["tag_id", 9], ["material_id", 8]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:23:00 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 9ms (Views: 1.0ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:23:00.132114"], ["updated_at", "2016-04-26 10:23:00.132114"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:23:00.134469"], ["updated_at", "2016-04-26 10:23:00.134469"]]
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials_tags" ("tag_id", "material_id") VALUES ($1, $2)  [["tag_id", 10], ["material_id", 9]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:23:00 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:23:00 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:23:00.146417"], ["updated_at", "2016-04-26 10:23:00.146417"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 2ms (Views: 0.3ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.4ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:23:00.153215"], ["updated_at", "2016-04-26 10:23:00.153215"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:23:00 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.3ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:24:42.767409"], ["updated_at", "2016-04-26 10:24:42.767409"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:24:42 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 10ms (Views: 1.6ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:24:42.812562"], ["updated_at", "2016-04-26 10:24:42.812562"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:24:42.833378"], ["updated_at", "2016-04-26 10:24:42.833378"]]
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "materials_tags" ("tag_id", "material_id") VALUES ($1, $2)  [["tag_id", 12], ["material_id", 12]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:24:42 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:24:42 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:24:42.850088"], ["updated_at", "2016-04-26 10:24:42.850088"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 3ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:24:42.856087"], ["updated_at", "2016-04-26 10:24:42.856087"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:24:42 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.3ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:26:35.046773"], ["updated_at", "2016-04-26 10:26:35.046773"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:26:35 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 9ms (Views: 1.0ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:26:35.092129"], ["updated_at", "2016-04-26 10:26:35.092129"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:26:35.111816"], ["updated_at", "2016-04-26 10:26:35.111816"]]
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "materials_tags" ("tag_id", "material_id") VALUES ($1, $2)  [["tag_id", 14], ["material_id", 15]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:26:35 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:26:35 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:26:35.127122"], ["updated_at", "2016-04-26 10:26:35.127122"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 3ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.4ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:26:35.135637"], ["updated_at", "2016-04-26 10:26:35.135637"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:26:35 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.2ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:35:43.516764"], ["updated_at", "2016-04-26 10:35:43.516764"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:35:43 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 9ms (Views: 1.0ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:35:43 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:35:43.561700"], ["updated_at", "2016-04-26 10:35:43.561700"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 2ms (Views: 0.3ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.5ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.3ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:35:43.570128"], ["updated_at", "2016-04-26 10:35:43.570128"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:35:43 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.3ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (118.8ms)[0m  [1mDROP DATABASE IF EXISTS "organizatron_test"[0m
+  [1m[35m (240.0ms)[0m  CREATE DATABASE "organizatron_test" ENCODING = 'unicode'
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (3.5ms)[0m  CREATE TABLE "material_tags" ("id" serial primary key, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (3.0ms)[0m  [1mCREATE TABLE "materials" ("id" serial primary key, "link_url" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "title" character varying, "description" character varying) [0m
+  [1m[35m (0.7ms)[0m  CREATE TABLE "materials_tags" ("material_id" integer NOT NULL, "tag_id" integer NOT NULL) 
+  [1m[36m (0.7ms)[0m  [1mCREATE  INDEX  "index_materials_tags_on_material_id_and_tag_id" ON "materials_tags" USING btree ("material_id", "tag_id")[0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX  "index_materials_tags_on_tag_id_and_material_id" ON "materials_tags" USING btree ("tag_id", "material_id")
+  [1m[36m (2.5ms)[0m  [1mCREATE TABLE "tags" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying NOT NULL) 
+  [1m[36m (0.9ms)[0m  [1mCREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")[0m
+  [1m[35m (0.2ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160426103724')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160425185049')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160425191220')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160425191248')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160425193158')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160426090609')
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:37:36.354883"], ["updated_at", "2016-04-26 10:37:36.354883"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:37:36 +0100
+Processing by MaterialsController#index as JSON
+  [1m[36mMaterial Load (0.3ms)[0m  [1mSELECT "materials".* FROM "materials"[0m
+Completed 200 OK in 10ms (Views: 1.3ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:37:36 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:37:36.406102"], ["updated_at", "2016-04-26 10:37:36.406102"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Completed 201 Created in 2ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+  [1m[36mMaterial Load (0.3ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "interesting"], ["created_at", "2016-04-26 10:37:36.412229"], ["updated_at", "2016-04-26 10:37:36.412229"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:37:36 +0100
+Processing by TagsController#index as JSON
+  [1m[36mTag Load (0.2ms)[0m  [1mSELECT "tags".* FROM "tags"[0m
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:39:44.307299"], ["updated_at", "2016-04-26 10:39:44.307299"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:39:44 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 9ms (Views: 1.1ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:39:44 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:39:44.362111"], ["updated_at", "2016-04-26 10:39:44.362111"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 2ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.3ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:39:44.368571"], ["updated_at", "2016-04-26 10:39:44.368571"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:39:44 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.3ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "materials" ("title", "link_url", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Test Driving a JSON API in Rails"], ["link_url", "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"], ["description", "this is quite useful"], ["created_at", "2016-04-26 10:40:05.046596"], ["updated_at", "2016-04-26 10:40:05.046596"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/materials" for 127.0.0.1 at 2016-04-26 11:40:05 +0100
+Processing by MaterialsController#index as JSON
+  [1m[35mMaterial Load (0.4ms)[0m  SELECT "materials".* FROM "materials"
+Completed 200 OK in 9ms (Views: 1.1ms | ActiveRecord: 0.4ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started POST "/materials" for 127.0.0.1 at 2016-04-26 11:40:05 +0100
+Processing by MaterialsController#create as JSON
+  Parameters: {"material"=>{"title"=>"Yelp V1 walkthrough", "link_url"=>"https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app", "description"=>"would be a bit stuck without this one"}}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "materials" ("title", "description", "link_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Yelp V1 walkthrough"], ["description", "would be a bit stuck without this one"], ["link_url", "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"], ["created_at", "2016-04-26 10:40:05.101715"], ["updated_at", "2016-04-26 10:40:05.101715"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 2ms (Views: 0.3ms | ActiveRecord: 0.3ms)
+  [1m[35mMaterial Load (0.4ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36mMaterial Load (0.2ms)[0m  [1mSELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1[0m
+  [1m[35mMaterial Load (0.2ms)[0m  SELECT  "materials".* FROM "materials"  ORDER BY "materials"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "interesting"], ["created_at", "2016-04-26 10:40:05.107808"], ["updated_at", "2016-04-26 10:40:05.107808"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/tags" for 127.0.0.1 at 2016-04-26 11:40:05 +0100
+Processing by TagsController#index as JSON
+  [1m[35mTag Load (0.2ms)[0m  SELECT "tags".* FROM "tags"
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m

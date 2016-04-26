@@ -24,15 +24,21 @@ describe "materials API" do
 
   it "returns all the materials associated with a tag" do
     expected_result = FactoryGirl.create(:materials_tags)
+    p expected_result
+    p expected_result.materials
     get "/tags", {}, { "Accept" => "application/json" }
 
     expect(response.status).to eq 200
 
     body = JSON.parse(response.body)
 
+
+    expect(body.first["id"]).to eq expected_result.id
     expect(body.first["name"]).to eq expected_result.name
     expect(body.first["materials"].count).to eq 2
     expect(body.first["materials"].last["description"]).to eq expected_result.materials.last.description
+    expect(body.first["materials"].last["id"]).to eq expected_result.materials.last.id
+    # expect(body.first["materials"].last["votes"]).to eq expected_result.votes.last.id
   end
 end
 
@@ -53,6 +59,8 @@ end
           # "tags" => [{"name"=> "tag1"}, {"name"=> "tag2"}]
           }
         }.to_json
+
+        p material_params
 
       request_headers = {
         "Accept" => "application/json",

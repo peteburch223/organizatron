@@ -11,8 +11,16 @@ FactoryGirl.define do
     t.sequence(:name) { |n| "Tag#{n}" }
   end
 
+  factory :vote, parent: :material_tag_link do |v|
+    v.sequence(:value) { |n| n }
+  end
+
   factory :materials_tags, parent: :tag do
     materials {[FactoryGirl.create(:material),FactoryGirl.create(:material)]}
   end
+
+
+
+
 
 end

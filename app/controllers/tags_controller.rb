@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   def index
-    render json: Tag.all, only: :name, include: {materials: {only: [:title, :link_url, :description]}}
+    # require 'pry'; binding.pry
+    render json: Tag.all, only: [:id, :name], include: {materials: {only: [:id, :title, :link_url, :description]}}
   end
 end

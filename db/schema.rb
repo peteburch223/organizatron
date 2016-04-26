@@ -11,36 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426103724) do
+ActiveRecord::Schema.define(version: 20160426155422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "material_tags", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "material_tag_links", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "tag_id"
+    t.integer  "material_id"
   end
+
+  add_index "material_tag_links", ["material_id"], name: "index_material_tag_links_on_material_id", using: :btree
+  add_index "material_tag_links", ["tag_id"], name: "index_material_tag_links_on_tag_id", using: :btree
 
   create_table "materials", force: :cascade do |t|
     t.string   "link_url"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
     t.string   "title"
     t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
-
-  create_table "materials_tags", id: false, force: :cascade do |t|
-    t.integer "material_id", null: false
-    t.integer "tag_id",      null: false
-  end
-
-  add_index "materials_tags", ["material_id", "tag_id"], name: "index_materials_tags_on_material_id_and_tag_id", using: :btree
-  add_index "materials_tags", ["tag_id", "material_id"], name: "index_materials_tags_on_tag_id_and_material_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "value"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "material_tag_link_id"
+  end
+
+  add_index "votes", ["material_tag_link_id"], name: "index_votes_on_material_tag_link_id", using: :btree
 
 end

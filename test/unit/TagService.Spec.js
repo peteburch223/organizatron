@@ -1,24 +1,24 @@
-describe('MaterialService', function(){
+describe('TagService', function(){
   beforeEach(module('organizatronApp'));
 
-  var TagService, MaterialFactory, httpBackend;
+  var TagService, TagFactory, httpBackend;
 
 
-  var tags = {{name: 'angular', materialCount: 10 }, {name: 'rails', materialCount: 6 }};
+  var tags = [{name: 'angular', materialCount: 10 }, {name: 'rails', materialCount: 6 }];
 
-  beforeEach(inject(function(_TagService_, _MaterialFactory_, $httpBackend) {
+  beforeEach(inject(function(_TagService_, _TagFactory_, $httpBackend) {
     TagService = _TagService_;
-    MaterialFactory = _MaterialFactory_;
+    TagFactory = _TagFactory_;
     httpBackend = $httpBackend;
-    httpBackend
-      .whenGET('http://localhost:3000').respond({ tags });
   }));
 
   it('gets tags from api', function(){
-      MaterialService.getAllTags()
-        .then(function(response) {
-          expect(response.data).toEqual({tags);
-        });
-      httpBackend.flush();
+    httpBackend.expectGET("http://quiet-beach-24792.herokuapp.com/todos.json").respond(tags);
+    console.log(TagService.getAllTags());
+    TagService.getAllTags().then(function(tag){
+
+      expect(tag).toEqual(tags);
+    });
+    httpBackend.flush();
   });
 });

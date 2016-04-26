@@ -1,10 +1,10 @@
-organizatronApp.controller('OrganizatronController', [ 'MaterialFactory', function(MaterialFactory) {
+organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'MaterialService','TagFactory','TagService',function(MaterialFactory, MaterialService, TagFactory,TagService) {
   var vm = this;
 
   vm.materials = [];
 
-  vm.addMaterial = function(material) {
-    vm.materials.push(material);
+  vm.addMaterial = function(materials) {
+    vm.materials.push(materials);
   };
 }]);
 

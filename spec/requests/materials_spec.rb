@@ -4,6 +4,7 @@ describe "materials API" do
   before(:each) do
 
   end
+
   describe "GET /materials" do
     it "returns all the materials" do
       expected_result = FactoryGirl.create :material
@@ -38,15 +39,18 @@ end
 
   describe "POST /materials" do
     it 'creates a material' do
-      title = "Yelp V1 walkthrough"
-      link_url = "https://github.com/makersacademy/course/blob/master/rails/yelpv1.md#installing-rails-and-initialising-your-app"
-      description = "would be a bit stuck without this one"
+      title = "material title"
+      link_url = "http://#/"
+      description = "description"
+      tags = ["tag1", "tag2"]
 
       material_params = {
         "material" => {
           "title" => title,
           "link_url" => link_url,
-          "description" => description
+          "description" => description,
+          "tags" => tags
+          # "tags" => [{"name"=> "tag1"}, {"name"=> "tag2"}]
           }
         }.to_json
 
@@ -60,6 +64,7 @@ end
       expect(Material.first.title).to eq title
       expect(Material.first.link_url).to eq link_url
       expect(Material.first.description).to eq description
+      expect(Material.first.tags.last.name).to eq "tag2"
     end
 
     xit "responds with errors" do

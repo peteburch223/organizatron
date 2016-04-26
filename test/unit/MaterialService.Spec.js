@@ -21,8 +21,6 @@ describe('MaterialService', function(){
         .then(function(response) {
           expect(response.data).toEqual({title: 'angular article'});
         });
-
-      // expect(MaterialService.title).toEqual({title: 'angular article'});
       httpBackend.flush();
   });
 });

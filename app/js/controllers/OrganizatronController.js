@@ -1,8 +1,10 @@
 organizatronApp.controller('OrganizatronController', [function() {
-  this.links = [];
+  var vm = this;
 
-  this.addLink = function(link) {
-    this.links.push(link);
+  vm.materials = [];
+
+  vm.addMaterial = function(material) {
+    vm.materials.push(material);
   };
 }]);
 

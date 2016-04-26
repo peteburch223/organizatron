@@ -10,20 +10,20 @@
  <body>
   <div id="organizatron" ng-controller="OrganizatronController as controller">
     <section>
-      <label for="link-name">Link name: </label>
-      <input id="add-link-name" type="text" ng-model="linkName">
+      <label for="material-name">Material name: </label>
+      <input id="add-material-name" type="text" ng-model="materialName">
 
-      <label for="link-url">Link URL: </label>
-      <input id="add-link-url" type="text" ng-model="linkUrl">
+      <label for="material-url">Link URL: </label>
+      <input id="add-material-url" type="text" ng-model="materialurl">
 
-      <button id="save-link" type="button" ng-click="controller.addLink({ name:linkName, url:linkUrl })">Add Link</button>
+      <button id="save-material" type="button" ng-click="controller.addMaterial({ name:materialName, materialUrl:materialurl })">Add Material</button>
     </section>
 
     <hr>
 
-    <section id="link-list">
-      <div class="links" ng-repeat="link in controller.links">
-        <a href="{{ link.url }}">{{ link.name }}</a>
+    <section id="material-list">
+      <div class="materials" ng-repeat="material in controller.materials">
+        <a href="{{ material.materialUrl }}">{{ material.name }}</a>
       </div>
     </section>
 

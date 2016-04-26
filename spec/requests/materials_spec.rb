@@ -1,6 +1,12 @@
 
 describe "materials API" do
 
+  let(:material_tag_link) { build(:material_tag_link) }
+  let(:material_tag_link2) { build(:material_tag_link) }
+  let(:material) { build(:material) }
+  let(:material2) { build(:material) }
+  let(:tag) { build(:tag) }
+
   before(:each) do
 
   end
@@ -23,21 +29,28 @@ describe "materials API" do
 
 
   it "returns all the materials associated with a tag" do
-    expected_result = FactoryGirl.create(:materials_tags)
-    p expected_result
-    p expected_result.materials
+    link_material_with_tag(material_tag_link, material, tag)
+    link_material_with_tag(material_tag_link2, material2, tag)
+    # byebug
+    p expected_result = material_tag_link
+    # p expected_result.material
+    # p expected_result.tag
+
     get "/tags", {}, { "Accept" => "application/json" }
 
     expect(response.status).to eq 200
 
     body = JSON.parse(response.body)
 
+    p body
+
+
 
     expect(body.first["id"]).to eq expected_result.id
-    expect(body.first["name"]).to eq expected_result.name
+    expect(body.first["name"]).to eq expected_result.tag.name
     expect(body.first["materials"].count).to eq 2
-    expect(body.first["materials"].last["description"]).to eq expected_result.materials.last.description
-    expect(body.first["materials"].last["id"]).to eq expected_result.materials.last.id
+    expect(body.first["materials"].last["description"]).to eq material_tag_link2.material.description
+    expect(body.first["materials"].last["id"]).to eq material_tag_link2.material.id
     # expect(body.first["materials"].last["votes"]).to eq expected_result.votes.last.id
   end
 end
@@ -60,7 +73,7 @@ end
           }
         }.to_json
 
-        p material_params
+        # p material_params
 
       request_headers = {
         "Accept" => "application/json",

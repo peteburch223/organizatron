@@ -1,5 +1,9 @@
 
 describe "materials API" do
+
+  before(:each) do
+
+  end
   describe "GET /materials" do
     it "returns all the materials" do
       expected_result = FactoryGirl.create :material
@@ -17,22 +21,17 @@ describe "materials API" do
     end
 
 
-  it "returns all the materials filtered by tag" do
-    material = FactoryGirl.build(:material)
-    tag = FactoryGirl.build(:tag)
-    material_tag = FactoryGirl.build(:material_tag)
-    expected_result = link_material_with_tag(material_tag, material, tag)
-    p expected_result
-    get "/materials", {}, { "Accept" => "application/json" }
+  it "returns all the materials associated with a tag" do
+    expected_result = FactoryGirl.create(:materials_tags)
+    get "/tags", {}, { "Accept" => "application/json" }
 
     expect(response.status).to eq 200
 
-    body = JSON.parse(response.body).first
-    body.keep_if { |k,v| ["link_url","title","description"].include? k }
+    body = JSON.parse(response.body)
 
-    expect(body["link_url"]).to eq expected_result.link_url
-    expect(body["title"]).to eq expected_result.title
-    expect(body["description"]).to eq expected_result.description
+    expect(body.first["name"]).to eq expected_result.name
+    expect(body.first["materials"].count).to eq 2
+    expect(body.first["materials"].last["description"]).to eq expected_result.materials.last.description
   end
 end
 

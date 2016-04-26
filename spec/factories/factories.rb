@@ -1,18 +1,18 @@
 FactoryGirl.define do
-  factory :material do
-    title "Test Driving a JSON API in Rails"
-    link_url "http://commandercoriander.net/blog/2014/01/04/test-driving-a-json-api-in-rails/"
-    description "this is quite useful"
+  factory :material do |m|
+
+    m.sequence(:title) { |n| "Title#{n}" }
+    m.sequence(:link_url) { |n| "URL#{n}" }
+    m.sequence(:description) { |n| "Desc#{n}" }
 
   end
 
-  factory :tag do
-    name "interesting"
+  factory :tag do |t|
+    t.sequence(:name) { |n| "Tag#{n}" }
   end
 
-  #
-  factory :material_tag do
-    tag 'string'
-    material 'material'
+  factory :materials_tags, parent: :tag do
+    materials {[FactoryGirl.create(:material),FactoryGirl.create(:material)]}
   end
+
 end

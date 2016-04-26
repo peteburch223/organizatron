@@ -5,11 +5,10 @@ describe "tags API" do
 
       get "/tags", {}, { "Accept" => "application/json" }
 
-      expect(response.status).to eq 200
-
       body = JSON.parse(response.body).first
       body.keep_if { |k,v| ["name"].include? k }
 
+      expect(response.status).to eq 200
       expect(body["name"]).to eq expected_result.name
     end
   end

@@ -10,13 +10,19 @@
  <body>
   <div id="organizatron" ng-controller="OrganizatronController as controller">
     <section>
-      <label for="material-name">Material name: </label>
-      <input id="add-material-name" type="text" ng-model="materialName">
+      <label for="material-title">Material name: </label>
+      <input id="add-material-title" type="text" ng-model="materialName">
 
-      <label for="material-url">Link URL: </label>
+      <label for="material-url">Material URL: </label>
       <input id="add-material-url" type="text" ng-model="materialurl">
 
-      <button id="save-material" type="button" ng-click="controller.addMaterial({ name:materialName, materialUrl:materialurl })">Add Material</button>
+      <label for="material-description">Description: </label>
+      <input id="add-material-description" type="text" ng-model="materialDescription">
+
+      <label for="material-tag">Tag: </label>
+      <input id="add-material-tag" type="text" ng-model="materialTag">
+
+      <button id="save-material" type="button" ng-click="controller.addMaterial({ name:materialName, materialUrl:materialurl, description:materialDescription, tag:materialTag })">Add Material</button>
     </section>
 
     <hr>
@@ -24,6 +30,8 @@
     <section id="material-list">
       <div class="materials" ng-repeat="material in controller.materials">
         <a href="{{ material.materialUrl }}">{{ material.name }}</a>
+        <p> {{material.description}} </p>
+        <p>tag: {{material.tag}}</p>
       </div>
     </section>
 

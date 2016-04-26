@@ -6,12 +6,17 @@ describe('Basic feature test of organizatron App', function() {
 
   it('allows links to be added', function() {
     browser.get('/');
-    $('#add-material-name').clear().sendKeys('user added material');
+    $('#add-material-title').clear().sendKeys('user added material');
     $('#add-material-url').clear().sendKeys('http://url.com/');
+    $('#add-material-description').clear().sendKeys('short piece about node');
+    $('#add-material-tag').clear().sendKeys('node');
+
     $('#save-material').click();
     var linkName = $$('.materials').first();
     var linkUrl = linkName.$('a');
-    expect(linkName.getText()).toContain('user added material');
+    expect(linkName.getText()).toMatch('user added material');
+    expect(linkName.getText()).toMatch('short piece about node');
+    expect(linkName.getText()).toMatch('tag: node');
     expect(linkUrl.getAttribute('href')).toEqual('http://url.com/');
   });
 });

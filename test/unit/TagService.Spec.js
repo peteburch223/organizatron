@@ -15,9 +15,10 @@ describe('TagService', function(){
 
   it('gets tags from api', function(){
     TagService.getAllTags().then(function(tag){
-      expect(tag).toEqual('angular');
+      var tag1 = new TagFactory('angular',10);
+      var tag2 = new TagFactory('rails',6);
+      expect(tag).toEqual([tag1, tag2]);
     });
-    // expect(TagService.getAllTags()).toEqual(tags);
     httpBackend.flush();
   });
 });

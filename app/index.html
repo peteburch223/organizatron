@@ -32,10 +32,10 @@
     <hr>
 
     <section id="material-list">
-      <div class="materials" ng-repeat="material in controller.materials">
-        <a href="{{ material.materialUrl }}">{{ material.name }}</a>
-        <p> {{material.description}} </p>
-        <p>tag: {{material.tag}}</p>
+      <div class="materials" ng-repeat="tags in controller.tags">
+        <p>{{ tag.name }}</p>
+        <p> {{tag.materialCount}} </p>
+        <!-- <p>tag: {{material.tag}}</p> -->
       </div>
     </section>
 

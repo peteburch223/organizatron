@@ -11,4 +11,23 @@ organizatronApp.service('MaterialService', ['$http', 'MaterialFactory', function
       return data;
     });
   };
+
+  self.getByTag = function(tag) {
+    console.log("in getByTag")
+    return $http.get('http://localhost:3000/materials?tags=' + tag)
+      .then(function(response){
+        console.log("in success")
+        console.log(response.data);
+
+        return response.data.map(createMaterial)
+      })
+  }
+
+  function createMaterial(material){
+    console.log("in createMaterial")
+    console.log(material);
+    return new MaterialFactory(material.title, material.link_url, material.description, material.tags);
+  };
+
+
 }]);

@@ -43,7 +43,7 @@
 
     <section id="material-list">
       <div class="materials" ng-repeat="material in controller.materials">
-        <a ng-href="{{ material.link }}">{{ material.title }}</a><p> Material ID: {{ material.id }}</p>
+        <a ng-href="{{ material.link }}">{{ material.title }}</a>
         <p>{{ material.description }}</p>
         <div class="material-tags" ng-repeat="materialTag in material.tags">
           <p>{{ materialTag.name }} Material ID: {{ material.id }} Tag ID: {{ materialTag.id }}</p>

@@ -6,9 +6,10 @@ describe "materials API" do
   let(:material) { build(:material) }
   let(:material2) { build(:material) }
   let(:tag) { build(:tag) }
+  let(:tag2) { build(:tag) }
 
   describe "GET /materials" do
-    it "returns all the materials" do
+    xit "returns all the materials" do
       expected_result = FactoryGirl.create :material
 
       get "/materials", {}, { "Accept" => "application/json" }
@@ -23,23 +24,66 @@ describe "materials API" do
     end
 
 
-  it "returns all the materials associated with a tag" do
-    link_material_with_tag(material_tag_link, material, tag)
-    link_material_with_tag(material_tag_link2, material2, tag)
+    xit "returns all the materials associated with a tag" do
+      link_material_with_tag(material_tag_link, material, tag)
+      link_material_with_tag(material_tag_link2, material2, tag)
 
-    get "/tags", {}, { "Accept" => "application/json" }
+      get "/tags", {}, { "Accept" => "application/json" }
 
-    body = JSON.parse(response.body)
+      body = JSON.parse(response.body)
 
-    expect(response.status).to eq 200
-    expect(body.first["id"]).to eq material_tag_link.id
-    expect(body.first["name"]).to eq material_tag_link.tag.name
-    expect(body.first["materials"].count).to eq 2
-    expect(body.first["materials"].last["description"]).to eq material_tag_link2.material.description
-    expect(body.first["materials"].last["id"]).to eq material_tag_link2.material.id
-    # expect(body.first["materials"].last["votes"]).to eq material_tag_link.votes.last.id
+      expect(response.status).to eq 200
+      expect(body.first["id"]).to eq material_tag_link.id
+      expect(body.first["name"]).to eq material_tag_link.tag.name
+      expect(body.first["materials"].count).to eq 2
+      expect(body.first["materials"].last["description"]).to eq material_tag_link2.material.description
+      expect(body.first["materials"].last["id"]).to eq material_tag_link2.material.id
+      # expect(body.first["materials"].last["votes"]).to eq material_tag_link.votes.last.id
+    end
   end
-end
+
+  describe 'GET /materials?tags=params' do
+    it 'expect all materials from 1 tag' do
+      material_tag_link_1 = FactoryGirl.create(:material_tag_link)
+      material_1 = FactoryGirl.create(:material)
+      tag_1 = FactoryGirl.create(:tag)
+      link_material_with_tag(material_tag_link_1, material_1, tag_1)
+
+      material_tag_link_2 = FactoryGirl.create(:material_tag_link)
+      material_2 = FactoryGirl.create(:material)
+      tag_2 = FactoryGirl.create(:tag)
+      link_material_with_tag(material_tag_link_2, material_2, tag_2)
+
+      material_tag_link_3 = FactoryGirl.create(:material_tag_link)
+      material_tag_link_4 = FactoryGirl.create(:material_tag_link)
+      material_3 = FactoryGirl.create(:material)
+      link_material_with_tag(material_tag_link_3, material_3, tag_1)
+      link_material_with_tag(material_tag_link_4, material_3, tag_2)
+
+      expected_result = {
+        "materials" => [{
+          "title" => material_1.title,
+          "link_url" => material_1.link_url,
+          "description" => material_1.description,
+          "tags" => material_1.tags
+          },
+          {
+            "title" => material_3.title,
+            "link_url" => material_3.link_url,
+            "description" => material_3.description,
+            "tags" => material_3.tags
+            }
+        ]}
+
+      get "/materials?tags=#{tag_1.name}", {}, { "Accept" => "application/json" }
+
+      body = JSON.parse(response.body)
+
+      expect(response.status).to eq 200
+      expect(body).to eq expected_result
+      # expect no materials from other tag to be displayed
+    end
+  end
 
 
   describe "POST /materials" do

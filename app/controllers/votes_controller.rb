@@ -12,7 +12,6 @@ class VotesController < ApplicationController
   end
 
   def vote_params
-    p params
     params.require(:vote).permit(:value, :tag_id, :material_id)
   end
 end

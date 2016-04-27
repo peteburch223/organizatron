@@ -2,6 +2,7 @@ class MaterialsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
+    p params
     render json: Tag.all, only: [:id, :name], include: {materials: {only: [:id, :title, :link_url, :description]}}
 
     # render json: Material.all

@@ -3,22 +3,21 @@ describe('TagService', function(){
 
   var TagService, TagFactory, httpBackend;
 
-
   var tags = [{name: 'angular', materialCount: 10 }, {name: 'rails', materialCount: 6 }];
 
   beforeEach(inject(function(_TagService_, _TagFactory_, $httpBackend) {
     TagService = _TagService_;
     TagFactory = _TagFactory_;
     httpBackend = $httpBackend;
+    httpBackend.expectGET("http://localhost:3000").respond(tags);
   }));
 
-  it('gets tags from api', function(){
-    httpBackend.expectGET("http://quiet-beach-24792.herokuapp.com/todos.json").respond(tags);
-    console.log(TagService.getAllTags());
-    TagService.getAllTags().then(function(tag){
 
-      expect(tag).toEqual(tags);
+  it('gets tags from api', function(){
+    TagService.getAllTags().then(function(tag){
+      expect(tag).toEqual('angular');
     });
+    // expect(TagService.getAllTags()).toEqual(tags);
     httpBackend.flush();
   });
 });

@@ -22,7 +22,8 @@
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-jasmine": "^0.3.8",
-    "protractor": "^3.2.2"
+    "protractor": "^3.2.2",
+    "protractor-http-mock": "^0.6.0"
   },
   "dependencies": {
     "http-server": "^0.9.0"

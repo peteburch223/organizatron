@@ -18,7 +18,7 @@
       <input id="add-material-title" type="text" ng-model="materialName">
 
       <label for="material-url">Material URL: </label>
-      <input id="add-material-url" type="text" ng-model="materialurl">
+      <input id="add-material-url" type="text" ng-model="link_url">
 
       <label for="material-description">Description: </label>
       <input id="add-material-description" type="text" ng-model="materialDescription">
@@ -26,10 +26,7 @@
       <label for="material-tag">Tag: </label>
       <input id="add-material-tag" type="text" ng-model="materialTag">
 
-      <button id="save-material" type="button" ng-click="controller.addMaterial({ name:materialName, materialUrl:materialurl, description:materialDescription, tag:materialTag })">Add Material</button>
-
-      <button id="fetch-materials" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
-
+      <button id="save-material" type="button" ng-click="controller.addMaterial({ name:materialName, link_url:link_url, description:materialDescription, tag:materialTag })">Add Material</button>
 
     </section>
 
@@ -37,21 +34,20 @@
 
     <section id="tag-list">
       <div class="tags" ng-repeat="tag in controller.tags">
-        <p ng-click="controller.selectTag(tag.name)" id="{{ tag.id }}">{{ tag.name }}</p>
-        <!-- <p>tag: {{material.tag}}</p> -->
+        <p ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</p>
       </div>
 
       <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
-
     </section>
+    <hr>
 
     <section id="material-list">
       <div class="materials" ng-repeat="material in controller.materials">
-        <p>{{ material.title }}</p>
-        <!-- <p>tag: {{material.tag}}</p> -->
-        <!-- <div class="material-tags" ng-repeat="material-tag in material.tags">
-          <p>{{ material-tag.name }} </p>
-        </div> -->
+        <a ng-href="{{ material.link }}">{{ material.title }}</a><p> Material ID: {{ material.id }}</p>
+        <p>{{ material.description }}</p>
+        <div class="material-tags" ng-repeat="materialTag in material.tags">
+          <p>{{ materialTag.name }} Material ID: {{ material.id }} Tag ID: {{ materialTag.id }}</p>
+        </div>
       </div>
     </section>
    </div>

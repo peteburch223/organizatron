@@ -1,5 +1,6 @@
 organizatronApp.factory('MaterialFactory', function(){
   var material = function(id, title, link, description, tags) {
+    this.id = id;
     this.title = title;
     this.link = link;
     this.description = description;

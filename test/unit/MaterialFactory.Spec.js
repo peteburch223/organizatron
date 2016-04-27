@@ -3,7 +3,7 @@ describe('MaterialFactory', function(){
   var material;
 
   beforeEach(inject(function(MaterialFactory) {
-    material = new MaterialFactory('angular article', 'www.angular.js', 'explaining new routes component', 'angular');
+    material = new MaterialFactory(1, 'angular article', 'www.angular.js', 'explaining new routes component', 'angular');
   }));
 
   it('creates materials', function(){

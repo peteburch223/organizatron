@@ -12,11 +12,11 @@ describe('Basic feature test of organizatron App', function() {
   var link_1 = "http://link1.com"
   var description_1 = "Description 1"
 
-  var name_0 = "tag_name_0"
+  var name_0 = "angular"
   var tag_id_0 = 0
   var votes_0 = 0
 
-  var name_1 = "tag_name_1"
+  var name_1 = "rails"
   var tag_id_1 = 1
   var votes_1 = 1
 
@@ -71,8 +71,10 @@ describe('Basic feature test of organizatron App', function() {
 
   it('fetches materials by tag', function(){
     var tags = $$('.tags p');
+    console.log(tags.first());
     var firstTag = tags.first();
     firstTag.click();
+    $('#select-tags').click();
     var materials = $$('.materials p');
     expect(materials.first().getText()).toMatch('angular text book');
   });

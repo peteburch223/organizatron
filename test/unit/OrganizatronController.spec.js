@@ -56,14 +56,12 @@ describe('OrganizatronController', function() {
   it('fetches materials associated with selected tags', function(){
     var tagItem = "blah"
     ctrl.selectTag(tagItem)
-
-    // console.log("before start")
     ctrl.fetchMaterials(tags)
-    console.log("after fetchMaterials")
-
     scope.$apply();
     expect(ctrl.materials).toEqual(fetchedMaterials)
-
-    // expect MaterialService.getByTag to have been called with tags argument
   });
+
+  it('sends a vote to the API', function(){
+    
+  })
 });

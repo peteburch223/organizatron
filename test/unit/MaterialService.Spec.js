@@ -65,7 +65,7 @@ describe('MaterialService', function(){
       var tags_0 = new TagFactory(name_0, tag_id_0, votes_0)
       var tags_1 = new TagFactory(name_1, tag_id_1, votes_1)
       var material = new MaterialFactory(id_1, title_1, link_1,description_1, [tags_0, tags_1]);
-    MaterialService.getMaterialByTag(name_0).then(function(data){
+    MaterialService.getMaterialByTag([tags_0]).then(function(data){
       expect(data).toEqual([material]);
     });
     httpBackend.flush();

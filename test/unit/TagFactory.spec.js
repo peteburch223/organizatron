@@ -3,11 +3,10 @@ describe('TagFactory', function(){
   var tag;
 
   beforeEach(inject(function(TagFactory) {
-    tag = new TagFactory('angular', 13);
+    tag = new TagFactory('angular');
   }));
 
   it('creates tags', function(){
     expect(tag.name).toMatch('angular');
-    expect(tag.materialCount).toBe(13);
   });
 });

@@ -5,13 +5,13 @@ organizatronApp.service('TagService',['$http', 'TagFactory', function($http, Tag
     var tags = [];
     // _fetchApidata(tags);
     return $http.get('http://localhost:3000/tags').then(function(response){
-      console.log(response);
       response.data.forEach(function(data){
         tags.push(new TagFactory(data.name));
       });
+      console.log(tags);
       return tags;
     }, function(err){
-      console.log(err);
+      console.log('error' + err);
     });
 
     // function _fetchApidata(tags){

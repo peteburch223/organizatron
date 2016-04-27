@@ -27,21 +27,31 @@
       <input id="add-material-tag" type="text" ng-model="materialTag">
 
       <button id="save-material" type="button" ng-click="controller.addMaterial({ name:materialName, materialUrl:materialurl, description:materialDescription, tag:materialTag })">Add Material</button>
+
+      <button id="fetch-materials" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
+
+
     </section>
 
     <hr>
 
     <section id="tag-list">
       <div class="tags" ng-repeat="tag in controller.tags">
-        <p>{{ tag.name }}</p>
+        <p ng-click="controller.selectTag(tag.name)" id="{{ tag.id }}">{{ tag.name }}</p>
         <!-- <p>tag: {{material.tag}}</p> -->
       </div>
+
+      <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
+
     </section>
 
     <section id="material-list">
       <div class="materials" ng-repeat="material in controller.materials">
         <p>{{ material.title }}</p>
         <!-- <p>tag: {{material.tag}}</p> -->
+        <!-- <div class="material-tags" ng-repeat="material-tag in material.tags">
+          <p>{{ material-tag.name }} </p>
+        </div> -->
       </div>
     </section>
    </div>

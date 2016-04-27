@@ -3,17 +3,30 @@ organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'Materi
 
   vm.materials = [];
   vm.tags = [];
+  vm.selectedTags = [];
+
+
   TagService.getAllTags()
     .then(function(data){
-      console.log(data);
+      // console.log(data);
       vm.tags = data;
     });
   // console.log(vm.tags);
 
 
+  vm.selectTag = function(tag) {
+    vm.selectedTags.push(tag);
+  };
 
-  vm.addMaterial = function(materials) {
-    vm.materials.push(materials);
+  vm.fetchMaterials = function() {
+    console.log("in fetchMaterials")
+
+    console.log(vm.selectedTags)
+    MaterialService.getMaterialByTag(vm.selectedTags)
+    .then(function(data){
+      console.log(data)
+      vm.materials = data;
+    })
   };
 }]);
 

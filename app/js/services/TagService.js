@@ -10,21 +10,8 @@ organizatronApp.service('TagService',['$http', 'TagFactory', function($http, Tag
       });
       return tags;
     }, function(err){
-      console.log('error' + err);
+      // console.log('error' + err);
     });
-
-    // function _fetchApidata(tags){
-    //   return $http.get('http://localhost:3000').then(function(response){
-    //     _handleApiResponse(response.data, tags);
-    //   }, function(err){});
-    // }
-    //
-    // function _handleApiResponse(data,tags){
-    //   data.forEach(function(data){
-    //     tags.push(new TagFactory(data.name, data.materialCount));
-    //     return tags;
-    //   });
-    // }
   };
 
 

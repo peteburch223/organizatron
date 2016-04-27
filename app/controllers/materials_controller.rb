@@ -4,7 +4,14 @@ class MaterialsController < ApplicationController
   def index
     material_ids = linked_materials_from get_tag_ids
     shared_material_ids = get_shared material_ids
-    render json: (get_materials_from shared_material_ids.uniq)
+
+    materials = (get_materials_from shared_material_ids.uniq)
+
+    # materials = (get_materials_from shared_material_ids.uniq), only: [:id, :name], include: {materials: {only: [:id, :title, :link_url, :description]}}
+
+    render json: materials, only: [:id, :title, :link_url, :description], include: {tags: {only: [:id, :name]}}
+    # render json: materials, only: [:id, :title, :link_url, :description], include: {votes: {only: [:id, :value]}}
+    # render json: { "materials" => materials_formatted }
   end
 
   def create

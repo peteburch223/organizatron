@@ -4,7 +4,8 @@ organizatronApp.service('TagService',['$http', 'TagFactory', function($http, Tag
   self.getAllTags = function(){
     var tags = [];
     // _fetchApidata(tags);
-    return $http.get('http://localhost:3000').then(function(response){
+    return $http.get('http://localhost:3000/tags').then(function(response){
+      console.log(response);
       response.data.forEach(function(data){
         tags.push(new TagFactory(data.name));
       });

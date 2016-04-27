@@ -3,6 +3,7 @@ organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'Materi
 
   vm.materials = [];
   vm.tags = TagService.getAllTags();
+  console.log(vm.tags);
   vm.addMaterial = function(materials) {
     vm.materials.push(materials);
   };

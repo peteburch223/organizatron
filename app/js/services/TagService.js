@@ -8,7 +8,6 @@ organizatronApp.service('TagService',['$http', 'TagFactory', function($http, Tag
       response.data.forEach(function(data){
         tags.push(new TagFactory(data.name));
       });
-      console.log(tags);
       return tags;
     }, function(err){
       console.log('error' + err);

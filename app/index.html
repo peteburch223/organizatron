@@ -38,6 +38,12 @@
       </div>
     </section>
 
+    <section id="material-list">
+      <div class="materials" ng-repeat="material in controller.materials">
+        <p>{{ material.title }}</p>
+        <!-- <p>tag: {{material.tag}}</p> -->
+      </div>
+    </section>
    </div>
  </body>
 </html>

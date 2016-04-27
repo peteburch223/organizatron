@@ -9,14 +9,14 @@ describe('TagService', function(){
     TagService = _TagService_;
     TagFactory = _TagFactory_;
     httpBackend = $httpBackend;
-    httpBackend.expectGET("http://localhost:3000").respond(tags);
+    httpBackend.expectGET("http://localhost:3000/tags").respond(tags);
   }));
 
 
   it('gets tags from api', function(){
     TagService.getAllTags().then(function(tag){
-      var tag1 = new TagFactory('angular',10);
-      var tag2 = new TagFactory('rails',6);
+      var tag1 = new TagFactory('angular' );
+      var tag2 = new TagFactory('rails');
       expect(tag).toEqual([tag1, tag2]);
     });
     httpBackend.flush();

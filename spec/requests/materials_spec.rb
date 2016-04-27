@@ -62,12 +62,15 @@ describe "materials API" do
 
       expected_result = {
         "materials" => [{
+          #add id's => id: 1,
+
           "title" => material_1.title,
           "link_url" => material_1.link_url,
           "description" => material_1.description,
           "tags" => material_1.tags
           },
           {
+            #add id's
             "title" => material_3.title,
             "link_url" => material_3.link_url,
             "description" => material_3.description,

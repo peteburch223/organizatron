@@ -1,4 +1,4 @@
-organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'MaterialService','TagFactory','TagService',function(MaterialFactory, MaterialService, TagFactory,TagService) {
+organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'MaterialService','TagFactory','TagService', 'VoteService', function(MaterialFactory, MaterialService, TagFactory,TagService, VoteService) {
   var vm = this;
 
   vm.materials = [];
@@ -11,27 +11,29 @@ organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'Materi
     });
 
   vm.selectTag = function(tag) {
-    console.log(tag.name)
-    console.log(vm.selectedTags)
+    console.log(tag.name);
+    console.log(vm.selectedTags);
     if(vm.selectedTags.indexOf(tag) == -1){
       vm.selectedTags.push(tag);
     }
   };
 
   vm.fetchMaterials = function() {
-    console.log("in fetchMaterials")
+    console.log("in fetchMaterials");
     MaterialService.getMaterialByTag(vm.selectedTags)
     .then(function(data){
       vm.materials = data;
-    })
+    });
   };
 
   vm.addMaterial = function(materials){
-    console.log(materials)
+    console.log(materials);
     MaterialService.addMaterial(materials);
-  }
+  };
 
-
+  vm.sendVote = function(MaterialId, TagId, vote){
+    VoteService.sendVote(MaterialId, TagId, vote);
+  };
 }]);
 
 

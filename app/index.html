@@ -9,6 +9,7 @@
    <script src="js/services/MaterialService.js"></script>
    <script src="js/services/TagFactory.js"></script>
    <script src="js/services/TagService.js"></script>
+   <script src="js/services/VoteService.js"></script>
    <title>organizatron App</title>
  </head>
  <body>
@@ -47,6 +48,8 @@
         <p>{{ material.description }}</p>
         <div class="material-tags" ng-repeat="materialTag in material.tags">
           <p>{{ materialTag.name }} Material ID: {{ material.id }} Tag ID: {{ materialTag.id }}</p>
+          <button id="vote-up" type="button" ng-click="controller.sendVote(material.id,materialTag.id,1)">Upvote</button>
+          <button id="vote-down" type="button" ng-click="controller.sendVote(material.id,materialTag.id,-1)">Downvote</button>
         </div>
       </div>
     </section>

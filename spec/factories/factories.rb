@@ -11,8 +11,8 @@ FactoryGirl.define do
     t.sequence(:name) { |n| "Tag#{n}" }
   end
 
-  factory :vote, parent: :material_tag_link do |v|
-    v.sequence(:value) { |n| n }
+  factory :vote do |v|
+    v.sequence(:value) { rand(0..2) - 1 }
   end
 
   factory :material_tag_link do

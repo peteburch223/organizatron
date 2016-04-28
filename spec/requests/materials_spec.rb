@@ -9,7 +9,7 @@ describe "materials API" do
   let(:tag2) { build(:tag) }
 
   describe "GET /materials" do
-    xit "returns all the materials" do
+    it "returns all the materials", focus: true do
       expected_result = FactoryGirl.create :material
 
       get "/materials", {}, { "Accept" => "application/json" }
@@ -43,22 +43,52 @@ describe "materials API" do
   end
 
   describe 'GET /materials?tags=params' do
-    it 'expect all materials from 1 tag' do
+    it 'expect all materials from 1 tag', focus: true do
       material_tag_link_1 = FactoryGirl.create(:material_tag_link)
       material_1 = FactoryGirl.create(:material)
       tag_1 = FactoryGirl.create(:tag)
       link_material_with_tag(material_tag_link_1, material_1, tag_1)
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_1, vote_0)
+      link_mtl_with_vote(material_tag_link_1, vote_1)
 
       material_tag_link_2 = FactoryGirl.create(:material_tag_link)
       material_2 = FactoryGirl.create(:material)
       tag_2 = FactoryGirl.create(:tag)
       link_material_with_tag(material_tag_link_2, material_2, tag_2)
 
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      vote_2 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_2, vote_0)
+      link_mtl_with_vote(material_tag_link_2, vote_1)
+      link_mtl_with_vote(material_tag_link_2, vote_2)
+
+
+
       material_tag_link_3 = FactoryGirl.create(:material_tag_link)
       material_tag_link_4 = FactoryGirl.create(:material_tag_link)
       material_3 = FactoryGirl.create(:material)
       link_material_with_tag(material_tag_link_3, material_3, tag_1)
       link_material_with_tag(material_tag_link_4, material_3, tag_2)
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      vote_2 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_3, vote_0)
+      link_mtl_with_vote(material_tag_link_3, vote_1)
+      link_mtl_with_vote(material_tag_link_3, vote_2)
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      vote_2 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_4, vote_0)
+      link_mtl_with_vote(material_tag_link_4, vote_1)
+      link_mtl_with_vote(material_tag_link_4, vote_2)
+
+      # byebug
 
       expected_result = {
         "materials" => [{

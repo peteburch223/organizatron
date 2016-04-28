@@ -28,3 +28,11 @@ tags = [Tag.create(name: "Angular"), Tag.create(name: "Rails"),Tag.create(name: 
    mtl = MaterialTagLink.create(material_id: material.id, tag_id: tags[1].id)
  end
 end
+
+
+4.times do
+  MaterialTagLink.all.each do |mtl|
+    vote = (rand(2) == 0 ? -1 : 1)
+    mtl.votes << Vote.new(value: vote)
+  end
+end

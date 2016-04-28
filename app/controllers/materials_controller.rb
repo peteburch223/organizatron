@@ -3,19 +3,13 @@ class MaterialsController < ApplicationController
 
   def index
 
-    p tag_params_for_index.nil?
-
-    puts "Parameters: #{tag_params_for_index}"
-
-
-    if tag_params_for_index
+    # tag_params_for_index.nil?
+    # puts "Parameters: #{tag_params_for_index}"
+    if tag_params
       mtl_tag_hash = build_tag_votes_hash
-
       material_ids = materials_from tag_ids
       shared_material_ids = get_shared material_ids
-
       materials = build_materials_array_from(shared_material_ids, mtl_tag_hash).uniq
-
     else
       materials = Material.all
     end
@@ -23,11 +17,11 @@ class MaterialsController < ApplicationController
   end
 
   def create
-    tags = params['material']['tags']
-
     material = Material.new(material_params_for_create)
-    # tags.each { |t| material.tags << Tag.create( name: t['name'] ) }
-    tags.each { |t| material.tags << Tag.create( name: t ) }
+
+    tag_params.each do |t|
+      material.tags << Tag.create( name: t )
+    end
 
     if material.save
       render json: material, status: :created
@@ -40,7 +34,7 @@ class MaterialsController < ApplicationController
     params.require(:material).permit(:title, :description, :link_url)
   end
 
-  def tag_params_for_index
+  def tag_params
     params.require(:tags).split(" ") if params[:tags]
   end
 
@@ -87,7 +81,7 @@ class MaterialsController < ApplicationController
   end
 
   def tag_ids
-    tag_params_for_index.map do |tag|
+    tag_params.map do |tag|
       found_tag = Tag.find_by name: tag
       found_tag ? found_tag.id : nil
     end
@@ -101,7 +95,7 @@ class MaterialsController < ApplicationController
 
   def get_shared ids
     ids.select do |id|
-      ids.count(id) == tag_params_for_index.count
+      ids.count(id) == tag_params.count
     end
   end
 

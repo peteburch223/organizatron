@@ -9,39 +9,17 @@ class MaterialsController < ApplicationController
 
 
     if tag_params_for_index
-      material_tag_link_ids = linked_materials_from tag_ids
-      p "*****************"
-      p material_tag_link_ids
+      mtl_tag_hash = build_tag_votes_hash
 
-      # mtl_vote_count = vote_count_for material_tag_link_ids
+      material_ids = materials_from tag_ids
+      shared_material_ids = get_shared material_ids
 
-      mtl_tag_hash = tag_for material_tag_link_ids
+      materials = build_materials_hash_from(shared_material_ids, mtl_tag_hash)
 
-      materials = get_materials_for mtl_tag_hash
-
-      p
-
-      p mtl_vote_count
-      # p material_ids
-      shared_material_ids = get_shared material_tag_link_ids
-      materials = (get_materials_from shared_material_ids.uniq) #, only: [:id, :name], include: {materials: {only: [:id, :title, :link_url, :description]}}
-
-      p materials
     else
       materials = Material.all
     end
-
-    # byebug
-    # material_ids = linked_materials_from get_tag_ids
-    # shared_material_ids = get_shared material_ids
-    #
-    # materials = (get_materials_from shared_material_ids.uniq)
-
-    # materials = (get_materials_from shared_material_ids.uniq), only: [:id, :name], include: {materials: {only: [:id, :title, :link_url, :description]}}
-    # byebug
-    render json: materials, only: [:id, :title, :link_url, :description], include: {tags: {only: [:id, :name]}}
-    # render json: materials, only: [:id, :title, :link_url, :description], include: {votes: {only: [:id, :value]}}
-    # render json: { "materials" => materials_formatted }
+    render json: materials
   end
 
   def create
@@ -70,42 +48,43 @@ class MaterialsController < ApplicationController
     Vote.group(:material_tag_link_id).sum(:value)
   end
 
-  def tag_for material_tag_link_ids
+  def build_tag_votes_hash
+
+    material_tag_link_ids = MaterialTagLink.all.map(&:id)
     result = {}
-    byebug
+
     material_tag_link_ids.map do |mtl_id|
       temp ={}
 
       temp[:tag_id] = MaterialTagLink.find(mtl_id).tag.id
       temp[:tag_name] = MaterialTagLink.find(mtl_id).tag.name
       temp[:votes] = MaterialTagLink.find(mtl_id).votes.sum(:value)
-
-
       result[mtl_id] = temp
 
     end
-
     return result
   end
 
-  def get_materials_for mtl_tag_hash
-    result = []
-    mtl_tag_hash.each do |k, v|
 
+  def build_materials_hash_from(material_ids, mtl_tag_hash)
+    result = []
+    material_ids.each do |material_id|
       temp = {}
-      temp[:id] = MaterialTagLink.find(k).material.id
-      temp[:link_url] = MaterialTagLink.find(k).material.link_url
-      temp[:description] = MaterialTagLink.find(k).material.description
-      temp[:title] = MaterialTagLink.find(k).material.title
-      temp[:tags] = v
+      temp[:id] = material_id
+      temp[:link_url] = Material.find(material_id).link_url
+      temp[:title] = Material.find(material_id).title
+      temp[:description] = Material.find(material_id).description
+
+      mtls = MaterialTagLink.where(material_id:material_id)
+
+      temp[:tags] = mtls.map do |mtl|
+        mtl_tag_hash[mtl.id]
+      end
+
       result << temp
     end
-        # byebug
     return result
-
   end
-
-
 
   def tag_ids
     tag_params_for_index.map do |tag|
@@ -114,9 +93,9 @@ class MaterialsController < ApplicationController
     end
   end
 
-  def linked_materials_from tag_ids
+  def materials_from tag_ids
     MaterialTagLink.where(tag_id: tag_ids).map do |link|
-      link.id
+      link.material_id
     end
   end
 

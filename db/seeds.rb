@@ -25,7 +25,7 @@ tags = [Tag.create(name: "Angular"), Tag.create(name: "Rails"),Tag.create(name: 
  end
 
  if n%5== 0
-   mtl = MaterialTagLink.create(material_id: material.id, tag_id: tags[1].id)
+   mtl = MaterialTagLink.create(material_id: material.id, tag_id: tags[0].id)
  end
 end
 

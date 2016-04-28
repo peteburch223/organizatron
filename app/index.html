@@ -33,10 +33,22 @@
     <hr>
 
     <section id="tag-list">
-      <div class="tags" ng-repeat="tag in controller.tags">
-        <button ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+      <div class="available-tags">
+        <h2>Available Tags:</h2>
+        <div class="tags" ng-repeat="tag in controller.tagsForSelection">
+          <button ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+        </div>
+        <hr>
       </div>
-      <hr>
+
+      <div class="selected-tags">
+        <h2>Selected Tags:</h2>
+        <div class="tags" ng-repeat="tag in controller.selectedTags">
+          <button ng-click="controller.removeTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+        </div>
+        <hr>
+      </div>
+
       <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
     </section>
     <hr>

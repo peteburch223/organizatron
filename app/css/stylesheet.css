@@ -1,3 +1,51 @@
+/*div {
+  border: 1px solid black;
+}*/
+
 body {
-    background-color: lightblue;
+  font-family: 'Open Sans', sans-serif;
+  background-color: lightblue;
+}
+
+#tag-list, #add-material {
+  max-width: 800px;
+  background-color: #ffcc33;
+  margin: auto;
+  padding: 15px;
+}
+
+#available-tags {
+  width: 45%;
+  float: left;
+}
+
+#available-tags div, #selected-tags div {
+  display: inline;
+}
+
+#selected-tags {
+  width: 45%;
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+.add-material-input label {
+  width: 45%;
+  /*float: left;*/
+}
+
+.add-material-input input {
+  width: 45%;
+  float: right;
+}
+
+.add-material-input button {
+  float: right;
+}
+
+h2 {
+  text-align: center;
 }

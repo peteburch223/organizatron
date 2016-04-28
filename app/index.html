@@ -2,6 +2,7 @@
 <html lang="en" ng-app="organizatronApp">
  <head>
    <meta charset="utf-8">
+   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
    <script src="bower_components/angular/angular.js"></script>
    <script src="js/app.js"></script>
@@ -15,41 +16,51 @@
  </head>
  <body>
   <div id="organizatron" ng-controller="OrganizatronController as controller">
-    <section class="add-material">
-      <label for="material-title">Material name: </label>
-      <input id="add-material-title" type="text" ng-model="materialName">
+    <section id="add-material">
+      <h2>Add new Material</h2>
 
-      <label for="material-url">Material URL: </label>
-      <input id="add-material-url" type="text" ng-model="link_url">
+      <div class="add-material-input">
+        <label for="material-title">Material name: </label>
+        <input id="add-material-title" type="text" ng-model="materialName">
+      </div>
 
-      <label for="material-description">Description: </label>
-      <input id="add-material-description" type="text" ng-model="materialDescription">
+      <div class="add-material-input">
+        <label for="material-url">Material URL: </label>
+        <input id="add-material-url" type="text" ng-model="linkUrl">
+      </div>
 
-      <label for="material-tag">Tag: </label>
-      <input id="add-material-tag" type="text" ng-model="materialTag">
+      <div class="add-material-input">
+        <label for="material-description">Description: </label>
+        <input id="add-material-description" type="text" ng-model="materialDescription">
+      </div>
 
-      <button id="save-material" type="button" ng-click="controller.addMaterial({ title:materialName, link_url:link_url, description:materialDescription, tags:materialTag })">Add Material</button>
+      <div class="add-material-input">
+        <label for="material-tag">Tag: </label>
+        <input id="add-material-tag" type="text" ng-model="materialTag">
+      </div>
+
+      <div class="add-material-input">
+        <button id="save-material" type="button" ng-click="controller.addMaterial({ title:materialName, link_url:linkUrl, description:materialDescription, tags:materialTag })">Add Material</button>
+      </div>
+      <div class="clear"></div>
     </section>
 
-    <hr>
-
     <section id="tag-list">
-      <div class="available-tags">
-        <h2>Available Tags:</h2>
+      <div id="available-tags">
+        <h2>Available Tags</h2>
         <div class="tags" ng-repeat="tag in controller.tagsForSelection">
           <button ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
         </div>
-        <hr>
       </div>
 
-      <div class="selected-tags">
-        <h2>Selected Tags:</h2>
+      <div id="selected-tags">
+        <h2>Selected Tags</h2>
         <div class="tags" ng-repeat="tag in controller.selectedTags">
           <button ng-click="controller.removeTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
         </div>
-        <hr>
       </div>
 
+      <div class="clear"></div>
       <!-- <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button> -->
     </section>
 

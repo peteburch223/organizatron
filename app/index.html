@@ -34,9 +34,9 @@
 
     <section id="tag-list">
       <div class="tags" ng-repeat="tag in controller.tags">
-        <p ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</p>
+        <button ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
       </div>
-
+      <hr>
       <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
     </section>
     <hr>

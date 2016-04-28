@@ -14,53 +14,50 @@ organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'Materi
     vm.tagsForSelection = (vm.tags).diff(vm.selectedTags);
   };
 
-  TagService.getAllTags()
-    .then(function(data){
-      vm.tags = data;
-      vm.updateTags();
-    });
+  vm.getTagsForList = function() {
+    TagService.getAllTags()
+      .then(function(data){
+        vm.tags = data;
+        vm.updateTags();
+      });
+  };
+
+  vm.getTagsForList();
 
   vm.selectTag = function(tag) {
     if(vm.selectedTags.indexOf(tag) == -1) {
       vm.selectedTags.push(tag);
       vm.updateTags();
+      vm.fetchMaterials();
     }
   };
 
   vm.removeTag = function(tag) {
     vm.selectedTags.splice(vm.selectedTags.indexOf(tag), 1);
     vm.updateTags();
+    vm.fetchMaterials();
   };
 
   vm.fetchMaterials = function() {
-    console.log("in fetchMaterials");
-    MaterialService.getMaterialByTag(vm.selectedTags)
-    .then(function(data){
-      vm.materials = data;
-    });
+    if(vm.selectedTags.length === 0) {
+      vm.materials = [];
+    }
+    else {
+      MaterialService.getMaterialByTag(vm.selectedTags)
+      .then(function(data){
+        vm.materials = data;
+      });
+    }
   };
 
   vm.addMaterial = function(materials){
-    console.log(materials);
     MaterialService.addMaterial(materials);
+    vm.getTagsForList();
   };
 
   vm.sendVote = function(vote, materialTag){
     console.log(vote);
     VoteService.sendVote(vote);
     materialTag.votes += vote.vote.value;
-
   };
 }]);
-
-
-// $http({
-//   method: 'GET',
-//   url: '/someUrl'
-// }).then(function successCallback(response) {
-//     // this callback will be called asynchronously
-//     // when the response is available
-//   }, function errorCallback(response) {
-//     // called asynchronously if an error occurs
-//     // or server returns response with an error status.
-//   });

@@ -2,6 +2,7 @@
 <html lang="en" ng-app="organizatronApp">
  <head>
    <meta charset="utf-8">
+   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
    <script src="bower_components/angular/angular.js"></script>
    <script src="js/app.js"></script>
    <script src="js/controllers/OrganizatronController.js"></script>
@@ -14,7 +15,7 @@
  </head>
  <body>
   <div id="organizatron" ng-controller="OrganizatronController as controller">
-    <section>
+    <section class="add-material">
       <label for="material-title">Material name: </label>
       <input id="add-material-title" type="text" ng-model="materialName">
 
@@ -49,16 +50,15 @@
         <hr>
       </div>
 
-      <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button>
+      <!-- <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button> -->
     </section>
-    <hr>
 
     <section id="material-list">
       <div class="materials" ng-repeat="material in controller.materials">
         <a ng-href="{{ material.link }}">{{ material.title }}</a>
         <p>{{ material.description }}</p>
         <div class="material-tags" ng-repeat="materialTag in material.tags">
-          <p>{{ materialTag.name }} Material ID: {{ material.id }} Tag ID: {{ materialTag.id }}  Votes: {{ materialTag.votes }}</p>
+          <p>{{ materialTag.name }} Votes: {{ materialTag.votes }}</p>
           <button id="vote-up" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: 1}}, materialTag)">Upvote</button>
           <button id="vote-down" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: -1}}, materialTag)">Downvote</button>
         </div>

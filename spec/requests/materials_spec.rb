@@ -195,22 +195,20 @@ describe "materials API" do
       title = "material title"
       link_url = "http://#/"
       description = "description"
-      tags = ["tag1", "tag2"]
+      tags = "tag1,tag2"
 
       material_params = {
-        "material" => {
-          "title" => title,
-          "link_url" => link_url,
-          "description" => description,
-          "tags" => tags
-          # "tags" => [{"name"=> "tag1"}, {"name"=> "tag2"}]
-          }
+        "title" => title,
+        "link_url" => link_url,
+        "description" => description,
+        "tags" => tags
         }.to_json
 
       request_headers = {
         "Accept" => "application/json",
         "Content-Type" => "application/json"
       }
+
 
       post "/materials", material_params, request_headers
       expect(response.status).to eq 201

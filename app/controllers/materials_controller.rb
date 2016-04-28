@@ -5,7 +5,7 @@ class MaterialsController < ApplicationController
 
     # tag_params_for_index.nil?
     # puts "Parameters: #{tag_params_for_index}"
-    if tag_params
+    if tag_params_for_index
       mtl_tag_hash = build_tag_votes_hash
       material_ids = materials_from tag_ids
       shared_material_ids = get_shared material_ids
@@ -19,7 +19,7 @@ class MaterialsController < ApplicationController
   def create
     material = Material.new(material_params_for_create)
 
-    tag_params.each do |t|
+    tag_params_for_create.each do |t|
       material.tags << Tag.create( name: t )
     end
 
@@ -34,8 +34,12 @@ class MaterialsController < ApplicationController
     params.require(:material).permit(:title, :description, :link_url)
   end
 
-  def tag_params
+  def tag_params_for_index
     params.require(:tags).split(" ") if params[:tags]
+  end
+
+  def tag_params_for_create
+    params.require(:tags).split(",")
   end
 
   def vote_count_for material_tag_link_ids
@@ -81,7 +85,7 @@ class MaterialsController < ApplicationController
   end
 
   def tag_ids
-    tag_params.map do |tag|
+    tag_params_for_index.map do |tag|
       found_tag = Tag.find_by name: tag
       found_tag ? found_tag.id : nil
     end
@@ -95,7 +99,7 @@ class MaterialsController < ApplicationController
 
   def get_shared ids
     ids.select do |id|
-      ids.count(id) == tag_params.count
+      ids.count(id) == tag_params_for_index.count
     end
   end
 

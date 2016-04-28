@@ -31,8 +31,11 @@ organizatronApp.controller('OrganizatronController', ['MaterialFactory', 'Materi
     MaterialService.addMaterial(materials);
   };
 
-  vm.sendVote = function(MaterialId, TagId, vote){
-    VoteService.sendVote(MaterialId, TagId, vote);
+  vm.sendVote = function(vote, materialTag){
+    console.log(vote);
+    VoteService.sendVote(vote);
+    materialTag.votes += vote.value;
+
   };
 }]);
 

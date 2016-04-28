@@ -35,6 +35,8 @@ class MaterialsController < ApplicationController
   end
 
   def tag_params_for_index
+    p params[:tags]
+    
     params.require(:tags).split(" ") if params[:tags]
   end
 

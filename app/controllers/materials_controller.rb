@@ -14,7 +14,7 @@ class MaterialsController < ApplicationController
       material_ids = materials_from tag_ids
       shared_material_ids = get_shared material_ids
 
-      materials = build_materials_hash_from(shared_material_ids, mtl_tag_hash)
+      materials = build_materials_array_from(shared_material_ids, mtl_tag_hash).uniq
 
     else
       materials = Material.all
@@ -66,7 +66,7 @@ class MaterialsController < ApplicationController
   end
 
 
-  def build_materials_hash_from(material_ids, mtl_tag_hash)
+  def build_materials_array_from(material_ids, mtl_tag_hash)
     result = []
     material_ids.each do |material_id|
       temp = {}

@@ -9,6 +9,12 @@ describe "materials API" do
   let(:tag2) { build(:tag) }
 
   describe "GET /materials" do
+
+    before do
+
+
+    end
+
     it "returns all the materials", focus: true do
       expected_result = FactoryGirl.create :material
 
@@ -49,6 +55,8 @@ describe "materials API" do
       tag_1 = FactoryGirl.create(:tag)
       link_material_with_tag(material_tag_link_1, material_1, tag_1)
 
+
+
       vote_0 = FactoryGirl.create(:vote)
       vote_1 = FactoryGirl.create(:vote)
       link_mtl_with_vote(material_tag_link_1, vote_0)
@@ -65,8 +73,6 @@ describe "materials API" do
       link_mtl_with_vote(material_tag_link_2, vote_0)
       link_mtl_with_vote(material_tag_link_2, vote_1)
       link_mtl_with_vote(material_tag_link_2, vote_2)
-
-
 
       material_tag_link_3 = FactoryGirl.create(:material_tag_link)
       material_tag_link_4 = FactoryGirl.create(:material_tag_link)
@@ -88,25 +94,22 @@ describe "materials API" do
       link_mtl_with_vote(material_tag_link_4, vote_1)
       link_mtl_with_vote(material_tag_link_4, vote_2)
 
-      # byebug
-
-      expected_result = {
-        "materials" => [{
-          #add id's => id: 1,
-
+      expected_result =
+        [{
+          "id" => material_1.id,
           "title" => material_1.title,
           "link_url" => material_1.link_url,
           "description" => material_1.description,
-          "tags" => material_1.tags
+          "tags" => tags_for(material_1)
           },
           {
-            #add id's
+            "id" => material_3.id,
             "title" => material_3.title,
             "link_url" => material_3.link_url,
             "description" => material_3.description,
-            "tags" => material_3.tags
+            "tags" => tags_for(material_3)
             }
-        ]}
+        ]
 
       get "/materials?tags=#{tag_1.name}", {}, { "Accept" => "application/json" }
 
@@ -116,6 +119,74 @@ describe "materials API" do
       expect(body).to eq expected_result
       # expect no materials from other tag to be displayed
     end
+
+
+    it 'expect all materials from 2 tags', focus: true do
+      material_tag_link_1 = FactoryGirl.create(:material_tag_link)
+      material_1 = FactoryGirl.create(:material)
+      tag_1 = FactoryGirl.create(:tag)
+      link_material_with_tag(material_tag_link_1, material_1, tag_1)
+
+
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_1, vote_0)
+      link_mtl_with_vote(material_tag_link_1, vote_1)
+
+      material_tag_link_2 = FactoryGirl.create(:material_tag_link)
+      material_2 = FactoryGirl.create(:material)
+      tag_2 = FactoryGirl.create(:tag)
+      link_material_with_tag(material_tag_link_2, material_2, tag_2)
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      vote_2 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_2, vote_0)
+      link_mtl_with_vote(material_tag_link_2, vote_1)
+      link_mtl_with_vote(material_tag_link_2, vote_2)
+
+      material_tag_link_3 = FactoryGirl.create(:material_tag_link)
+      material_tag_link_4 = FactoryGirl.create(:material_tag_link)
+      material_3 = FactoryGirl.create(:material)
+      link_material_with_tag(material_tag_link_3, material_3, tag_1)
+      link_material_with_tag(material_tag_link_4, material_3, tag_2)
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      vote_2 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_3, vote_0)
+      link_mtl_with_vote(material_tag_link_3, vote_1)
+      link_mtl_with_vote(material_tag_link_3, vote_2)
+
+      vote_0 = FactoryGirl.create(:vote)
+      vote_1 = FactoryGirl.create(:vote)
+      vote_2 = FactoryGirl.create(:vote)
+      link_mtl_with_vote(material_tag_link_4, vote_0)
+      link_mtl_with_vote(material_tag_link_4, vote_1)
+      link_mtl_with_vote(material_tag_link_4, vote_2)
+
+      expected_result =
+        [
+          {
+            "id" => material_3.id,
+            "title" => material_3.title,
+            "link_url" => material_3.link_url,
+            "description" => material_3.description,
+            "tags" => tags_for(material_3)
+            }
+        ]
+
+      get "/materials?tags=#{tag_1.name}+#{tag_2.name}", {}, { "Accept" => "application/json" }
+
+      body = JSON.parse(response.body)
+
+      expect(response.status).to eq 200
+      expect(body).to eq expected_result
+      # expect no materials from other tag to be displayed
+    end
+
+
   end
 
 

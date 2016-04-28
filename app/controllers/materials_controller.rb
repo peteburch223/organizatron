@@ -56,8 +56,8 @@ class MaterialsController < ApplicationController
     material_tag_link_ids.map do |mtl_id|
       temp ={}
 
-      temp[:tag_id] = MaterialTagLink.find(mtl_id).tag.id
-      temp[:tag_name] = MaterialTagLink.find(mtl_id).tag.name
+      temp[:id] = MaterialTagLink.find(mtl_id).tag.id
+      temp[:name] = MaterialTagLink.find(mtl_id).tag.name
       temp[:votes] = MaterialTagLink.find(mtl_id).votes.sum(:value)
       result[mtl_id] = temp
 

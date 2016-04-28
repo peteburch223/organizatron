@@ -2,6 +2,7 @@ class MaterialsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
+    p params
     material_ids = linked_materials_from get_tag_ids
     shared_material_ids = get_shared material_ids
 

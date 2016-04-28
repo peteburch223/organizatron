@@ -18,6 +18,11 @@ Bundler.require(*Rails.groups)
 module Organizatron
   class Application < Rails::Application
 
+
+
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
 config.middleware.insert_before 0, "Rack::Cors" do
   allow do
     origins '*'

@@ -101,8 +101,10 @@
 
           <div class="row row-centered">
             <div class="material-tags col-centered" ng-repeat="materialTag in material.tags">
-              <div class="col-sm-2">
-                <h4>{{ materialTag.name }}</h4>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-primary" ng-click="controller.selectTag(materialTag)" id="{{ materialTag.id }}">{{ materialTag.name }}</button>
+
+                <!-- <h4>{{ materialTag.name }}</h4> -->
                 <p>Votes: {{ materialTag.votes }}</p>
                 <div class="btn-group-sm">
                   <button id="vote-up" class="btn btn-primary" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: 1}}, materialTag)"><span class="glyphicon glyphicon-thumbs-up"></span></button>

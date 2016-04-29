@@ -1,11 +1,11 @@
-class ConsolidatedData
+class MaterialsPresenter
   def initialize(params)
     @params = params
   end
 
   def get_materials
     if @params.has_key?(:tags) && @params[:tags] != ""
-      shared_material_ids = get_shared materials_from tag_ids
+      shared_material_ids = shared_materials_from tag_params_for_index
       mtl_tag_hash = build_tag_votes_hash_from shared_material_ids
       build_materials_array_from(shared_material_ids, mtl_tag_hash).uniq
     else
@@ -23,7 +23,10 @@ class ConsolidatedData
     Vote.group(:material_tag_link_id).sum(:value)
   end
 
+
+
   def build_tag_votes_hash_from shared_material_ids
+    # byebug
     votes_from_material_tag_link = MaterialTagLink.where(material_id: shared_material_ids)
     votes_from_material_tag_link.map(&:id).reduce({}) do |result, mtl_id|
       temp = MaterialTagLink.find(mtl_id).tag.slice(:id, :name)
@@ -48,26 +51,10 @@ class ConsolidatedData
     end
   end
 
-  def tag_ids
-    tag_params_for_index.map do |tag|
-      found_tag = Tag.find_by name: tag
-      found_tag ? found_tag.id : nil
-    end
+  def shared_materials_from params
+    materials = Material.joins(:tags).where(tags: {name: params}).map(&:id)
+    materials.select {|id| materials.count(id) == params.count}
   end
 
-  def materials_from tag_ids
-    MaterialTagLink.where(tag_id: tag_ids).map do |link|
-      link.material_id
-    end
-  end
 
-  def get_shared ids
-    ids.select do |id|
-      ids.count(id) == tag_params_for_index.count
-    end
-  end
-
-  def get_materials_from ids
-    Material.where(id: ids)
-  end
 end

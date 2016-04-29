@@ -4,7 +4,10 @@
    <meta charset="utf-8">
    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+   <script src="bower_components/jquery/dist/jquery.js"></script>
    <script src="bower_components/angular/angular.js"></script>
+   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
    <script src="js/app.js"></script>
    <script src="js/controllers/OrganizatronController.js"></script>
    <script src="js/services/MaterialFactory.js"></script>
@@ -15,66 +18,97 @@
    <title>organizatron App</title>
  </head>
  <body>
+ <div class="containter-fluid">
+   <div class="jumbotron text-center">
+  <h1>Organisatron</h1>
+  <p>Order useful stuff by tag, vote on the relevance of tags to the material.</p>
+</div>
+
   <div id="organizatron" ng-controller="OrganizatronController as controller">
-    <section id="add-material">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#add-material">Add Material</button>
+    <div class="panel panel-default text-center row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+
+    <section id="add-material" class="collapse">
       <h2>Add new Material</h2>
 
-      <div class="add-material-input">
+      <div class="form-group">
         <label for="material-title">Material name: </label>
-        <input id="add-material-title" type="text" ng-model="materialName">
+        <input id="add-material-title" class="form-control" type="text" ng-model="materialName">
       </div>
 
-      <div class="add-material-input">
+      <div class="form-group">
         <label for="material-url">Material URL: </label>
-        <input id="add-material-url" type="text" ng-model="linkUrl">
+        <input id="add-material-url" class="form-control" type="text" ng-model="linkUrl">
       </div>
 
-      <div class="add-material-input">
+      <div class="form-group">
         <label for="material-description">Description: </label>
-        <input id="add-material-description" type="text" ng-model="materialDescription">
+        <input id="add-material-description" class="form-control" type="text" ng-model="materialDescription">
       </div>
 
-      <div class="add-material-input">
-        <label for="material-tag">Tag: </label>
-        <input id="add-material-tag" type="text" ng-model="materialTag">
+      <div class="form-group">
+        <label for="material-tag">Tags (comma separated): </label>
+        <input id="add-material-tag" class="form-control" type="text" ng-model="materialTag">
       </div>
 
-      <div class="add-material-input">
-        <button id="save-material" type="button" ng-click="controller.addMaterial({ title:materialName, link_url:linkUrl, description:materialDescription, tags:materialTag })">Add Material</button>
+      <div class="form-group">
+        <button id="save-material" class="btn btn-info" type="button" ng-click="controller.addMaterial({ title:materialName, link_url:linkUrl, description:materialDescription, tags:materialTag })">Add Material</button>
       </div>
       <div class="clear"></div>
     </section>
+    </div>
+    <div class="col-sm-4"></div>
 
-    <section id="tag-list">
-      <div id="available-tags">
-        <h2>Available Tags</h2>
-        <div class="tags" ng-repeat="tag in controller.tagsForSelection">
-          <button ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+  </div>
+
+    <div class="panel panel-default row text-center">
+      <div class="col-sm-2"></div>
+
+      <section id="tag-list" >
+        <div id="available-tags" class="col-sm-4">
+          <h2>Available Tags</h2>
+          <div class="btn-group">
+            <div class="tags" ng-repeat="tag in controller.tagsForSelection">
+              <button type="button" class="btn btn-primary" ng-click="controller.selectTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div id="selected-tags">
-        <h2>Selected Tags</h2>
-        <div class="tags" ng-repeat="tag in controller.selectedTags">
-          <button ng-click="controller.removeTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+        <div id="selected-tags" class="col-sm-4">
+          <h2>Selected Tags</h2>
+          <div class="btn-group">
+            <div class="tags" ng-repeat="tag in controller.selectedTags">
+              <button type="button" class="btn btn-primary" ng-click="controller.removeTag(tag)" id="{{ tag.id }}">{{ tag.name }}</button>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+      <div class="col-sm-2"></div>
+    </div>
 
-      <div class="clear"></div>
-      <!-- <button id="select-tags" type="button" ng-click="controller.fetchMaterials()">Fetch Material</button> -->
-    </section>
 
-    <section id="material-list">
-      <div class="materials" ng-repeat="material in controller.materials">
-        <a ng-href="{{ material.link }}">{{ material.title }}</a>
+    <section id="material-list" class="panel panel-default materials list-group ">
+      <div class="list-group-item" ng-repeat="material in controller.materials">
+        <h2><a ng-href="{{ material.link }}">{{ material.title }}</a></h2>
+
         <p>{{ material.description }}</p>
-        <div class="material-tags" ng-repeat="materialTag in material.tags">
-          <p>{{ materialTag.name }} Votes: {{ materialTag.votes }}</p>
-          <button id="vote-up" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: 1}}, materialTag)">Upvote</button>
-          <button id="vote-down" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: -1}}, materialTag)">Downvote</button>
+        <div class="row">
+          <div class="material-tags" ng-repeat="materialTag in material.tags">
+            <div class="col-sm-1 text-center">
+              <h4>{{ materialTag.name }}</h4>
+              <p>Votes: {{ materialTag.votes }}</p>
+              <div class="btn-group-sm">
+                <button id="vote-up" class="btn btn-primary" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: 1}}, materialTag)"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                <button id="vote-down" class="btn btn-primary" type="button" ng-click="controller.sendVote({vote: {material_id: material.id, tag_id: materialTag.id, value: -1}}, materialTag)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
    </div>
+ </div>
  </body>
 </html>

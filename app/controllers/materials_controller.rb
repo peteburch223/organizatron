@@ -13,7 +13,6 @@ class MaterialsController < ApplicationController
     material = Material.new(material_params_for_create)
 
     tag_params_for_create.each do |t|
-      # byebug
       material.tags << Tag.where(name:t).first_or_create
     end
 

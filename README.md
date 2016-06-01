@@ -1,69 +1,34 @@
+# Organizatron
+
+Organizatron is a bookmark organizer for groups and organizations.
+
+Bookmarks are added by users and then tagged according to their content. Other users then rate the tags relevance to the content as they use the resource.
+
+## Setup
+
+Clone the repo to your local machine into two separate locations, one for the rails backend and one for the frontend.
+
 ```
-as a coder/maskers student
-in order to work more efficiently
-i want to quickly locate useful material
+# In the backend folder
+$ git checkout rails-integration-2
+$ bundle
+$ rake db:setup
+$ rails s
 ```
 
 ```
-as a user
-so i can share materials
-i want to save links
+# In the frontend folder
+$ git checkout angular-integration
+$ open app/index.html
 ```
 
-```
-as a user
-in order to provide further information on my links
-i want to add some qualifying text
-```
+## Technologies Used
 
-```
-as a user
-in order to categorise material
-i would like to create tags
-```
+Rails was used for the backend with Angular on the frontend. Testing was done with RSpec and Capybara for the backend, and the frontend was tested with Karma and Protractor.
 
-```
-as a user
-in order to organise my material
-i would like to associate one or more tags to materials
-```
+## Contributors
 
-```
-as a user
-in order to locate useful material
-i would like to filter one or more by tag
-```
-
-```
-as a user
-in order to organise my material by relevance
-i would like to upvote and downvote tags
-```
-
-```
-as a user
-in order to prioritise materials
-i would like to sort my materials by number of votes
-```
-***
-Nice to-haves
-
-```
-as a user
-in order to ensure the quality of data
-i want to authentic user via github
-```
-
-```
-as a user
-in order to maintain quality
-i would like to limit votes
-```
-
-```
-as a user
-in order to maintain quality
-i would like to report inappropriate materials
-
-***
-Technologies: Rails, Angular, PSQL/DataMapper
+* [Pete BURCH](https://github.com/peteburch223)
+* [Adil Ali](https://github.com/adilw3nomad)
+* [Murilo Dal Ri](https://github.com/MuriloDalRi)
+* [Oliver Smit](https://github.com/olmesm)
